@@ -1,35 +1,31 @@
---with weeks as 
---(
---    select top 52  row_number() over (order by  object_id) as wk, 2023 as yy  from sys.objects
---)
---select wk,
---    --2.  first day of week 0 for that year (may belong to previous year) + number of weeks
---    dateadd(ww, wk + datediff(wk, 0, 
---        --1.  First date of the year (week 0)
---        dateadd(YEAR, datediff(year,0, getDate()),0)
---     ),-1) -- -1 here because 1900-01-01 (day 0) was a Monday. Adding weeks to a Monday results in a Monday
---from weeks
-with [ctea] as (
-SELECT
-	*, 
-	[year] = CAST(LEFT([YYYY-KW],4) AS int),
-	[wk] = CASE WHEN LEN([YYYY-KW]) = 7 THEN CAST(RIGHT([YYYY-KW],2) AS int) ELSE CAST(RIGHT([YYYY-KW],1) AS int) END
---	dateadd(ww, RIGHT([YYYY-KW],2)  + datediff(RIGHT([YYYY-KW],2), 0, dateadd(YEAR, datediff(year,0, getDate()),0)),-1)
-FROM
-	[dbo].[Paarungen]
-WHERE
-	CAST(LEFT([YYYY-KW],4) AS int) = 2023
-	AND CASE WHEN LEN([YYYY-KW]) = 7 THEN CAST(RIGHT([YYYY-KW],2) AS int) ELSE CAST(RIGHT([YYYY-KW],1) AS int) END < 18),
-[cteb] as(
-select 
-	[year]
-	,[wk]
-	,[firstdayofweek] = CONVERT(nvarchar(19),DATEADD(hh, 32, dateadd(ww, wk + datediff(wk, 0, dateadd([year], datediff(year,0, getDate()),0)),-1)),120)
+--achtung unter umständen fehlen in der Spalte YYYY-KW die führenden nullen bei der KW
+--ansonsten kann das skript unten zur extraktion verwendet werden 
+
+WITH [ctea] AS (
+SELECT 
+	[firstdayofweek]= DATEADD(WEEK, CAST(RIGHT([YYYY-KW],2)AS INT), DATEADD(YEAR, CAST(LEFT([YYYY-KW],4)AS INT)-1900, 0))-6
 	,[T1-user_id]
 	,[T1-Vorname]
 	,[T2-user_id]
 	,[T2-Vorname]	
-from [ctea])
+FROM 
+	[dbo].[Paarungen]
+WHERE 
+--welche Zeiträume sind zu extrahieren?
+	CAST(REPLACE([YYYY-KW],N'-', N'') as int) > 202317 
+	AND CAST(REPLACE([YYYY-KW],N'-', N'') as int) < 202346
+	),[cteb] AS (
+SELECT 
+	[firstdayofweek] = CAST(DATEPART(year,[firstdayofweek]) AS nvarchar(4)) + N'-' + 
+	CASE WHEN LEN(CAST(DATEPART(month,[firstdayofweek]) AS nvarchar(2))) = 1 THEN N'0'+ CAST(DATEPART(month,[firstdayofweek]) AS nvarchar(2)) ELSE CAST(DATEPART(month,[firstdayofweek]) AS nvarchar(2)) END
+	+ N'-' + CASE WHEN LEN(CAST(DATEPART(day,[firstdayofweek]) AS nvarchar(2))) = 1 THEN N'0' + CAST(DATEPART(day,[firstdayofweek]) AS nvarchar(2)) ELSE CAST(DATEPART(day,[firstdayofweek]) AS nvarchar(2)) END + N' 08:00:00'
+	,[T1-user_id]
+	,[T1-Vorname]
+	,[T2-user_id]
+	,[T2-Vorname]	
+FROM
+	[ctea]
+), [ctec] AS (
 
 SELECT * 
 
@@ -37,4 +33,8 @@ SELECT *
 
 
 FROM [cteb]
+)
+
+SELECT * FROM ctec 
+--WHERE [pscrtmeeting] LIKE N'%slotwinski%'
 order by 1,2,4,6
