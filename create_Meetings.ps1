@@ -10,7 +10,10 @@ function crtpulsmeeting{
 $meetstart=[Datetime]::ParseExact($startstring, 'yyyy-MM-dd HH:mm:ss' ,[Globalization.CultureInfo]::CreateSpecificCulture('de-CH'))
 [string]$subj = 'PulsHorizont Austausch'
 [string]$meetbody = 'Hallo '+$t1vorname+', Hallo '+$t2vorname+',
-Im Rahmen des Vorhabens Puls Horizont haben wir das Thema "fehlende Koordination" bearbeitet. Daraus ist der Vorschlag entstanden, einen regelmässigen Austausch zwischen Führungskräften zu etablieren, um die Kommunikationswege zu verkürzen und für grössere Transparenz zu sorgen. Wir hatten einen ersten Versuch für zwei Monate gestartet, in welchem sich Teamleiter, die nicht in der gleichen Abteilung sind austauschen. Die Erfahrungen sollten auf der confluence Seite - Meeting zwischen allen TL (PoC) https://confluence.bedag.ch/x/FIrBDg) protokolliert werden. Die Rücklaufquote war leider wenig aussagekräftig, weshalb zusätzlich Meinungen per Interview eingeholt wurden. Daraus ergab sich als Feedback, dass trotz anfänglicher Skepsis, der Austausch als sehr positiv empfunden wurde. 
+
+
+Im Rahmen der Initiative <a href="https://confluence.bedag.ch/x/3456C">Puls Horizont</a> welche das Ziel der Verbesserung der Zusammenarbeit hat, 
+haben wir zum Thema "fehlende Koordination" ein freiwilliges, institutionalisiertes Treffen zweier Führungskräfte ins Leben gerufen. Unter dem Workshop <a href="https://confluence.bedag.ch/x/FIrBDg">Meeting zwischen allen TL (PoC)</a>
 
 Deshalb haben wir uns entschieden, eine weitere Runde mit zwei Anpassungen zu starten. Wir erweitern den Kreis auf alle Führungskräfte welche am Workshop “Puls Bedag in Führung” teilnehmen und wir setzen einen unbestimmten Termin um die Einstiegshürde zu senken und auch einen Überblick über die Durchführung zu erhalten. 
 
@@ -41,6 +44,13 @@ $meeting.Send()
 }
 
 
+
+crtpulsmeeting -startstring "2023-08-28 08:00:00" -t1uid "michel.slotwinski@outlook.com" -t1vorname "Beat" -t2uid "michel.slotwinski@bedag.ch" -t2vorname "Michel"
+crtpulsmeeting -startstring "2023-09-11 08:00:00" -t1uid "michel.slotwinski@bedag.ch" -t1vorname "Michel" -t2uid "michel.slotwinski@outlook.com" -t2vorname "Beat"
+crtpulsmeeting -startstring "2023-09-25 08:00:00" -t1uid "michel.slotwinski@outlook.com" -t1vorname "Nicolas" -t2uid "michel.slotwinski@bedag.ch" -t2vorname "Michel"
+crtpulsmeeting -startstring "2023-10-09 08:00:00" -t1uid "michel.slotwinski@outlook.com" -t1vorname "Markus" -t2uid "michel.slotwinski@bedag.ch" -t2vorname "Michel"
+crtpulsmeeting -startstring "2023-10-23 08:00:00" -t1uid "michel.slotwinski@outlook.com" -t1vorname "Colin" -t2uid "michel.slotwinski@bedag.ch" -t2vorname "Michel"
+crtpulsmeeting -startstring "2023-11-06 08:00:00" -t1uid "michel.slotwinski@outlook.com" -t1vorname "Domenic" -t2uid "michel.slotwinski@bedag.ch" -t2vorname "Michel"
 
 
 
