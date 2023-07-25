@@ -10,6 +10,6 @@
 - a) Teilnehmer: Name, Vorname, Abteilung und mail
 - b) Paarungen: runde (iteration), yyyy-kw (Kelenderwoche), T1 user id(email) T1 Name, T1 Vorname, T1 Abteilung und die gleichen Spalten für T2
 -   Problem ist hier, wir haben momentan 73 Teilnehmer, ausserhalb der gleichen Abteulung ergibt das 2513 Meetings bei maximal 36 Meetings alle zwei wochen erstreckt sich dass über einen recht langen Zeitraum in dem die Telnehmerliste sich ändern kann.
-- 
--   
-- 
+-   die erste Runde ist soweit parat, ggf müssen korrekturen vorgenommen werden
+
+
